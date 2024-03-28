@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.word-list {
+    width: 300px;
+    margin: 20px auto;
+}
+
+.word-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.word-item:last-child {
+    border-bottom: none;
+}
+
+.word-score {
+    font-weight: bold;
+}
+
+.vote-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #2980b9;
+}
+
+.button.active {
+        background-color: #2980b9;
+}
+
+.sort-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.sort-buttons button {
+    background-color: white;
+    color: #50b2f3;
+    border: 2px solid #50b2f3;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.sort-buttons button:hover,
+.sort-buttons button.active
+ {
+    background-color: #50b2f3;
+    color: white;
+}
+
+.word-score {
+        padding: 6px;
+        border-radius: 6px;
+}
+
+.good {
+    background-color: #1abc9c;
+}
+
+.average {
+    background-color: #f39c12;
+}
+
+.bad {
+    background-color: #c0392b;
+}

@@ -6,102 +6,115 @@ let adjectives;
 let sortDirection = "up";
 
 function init() {
+    console.log("Let's start");
+
     adjectives = JSON.parse(getAdjectives());
-    addSortEvents();
+    console.log(adjectives);
     render();
+    addSortEvents();
 }
 
 function addSortEvents() {
-    document.querySelector('#sort-up').addEventListener('click', function () {
-        sortDirection = "up";
+    document.querySelector('#sort-up').addEventListener('click', function (event) {
+        this.classList.add('active');
         document.querySelector('#sort-down').classList.remove('active');
-        this.classList.toggle('active');
+        console.log("Sort up!");
+        sortDirection = "up";
         sort();
-        render();
     });
 
     document.querySelector('#sort-down').addEventListener('click', function () {
-        sortDirection = "down";
-        console.log('down', this);
+        this.classList.add('active');
         document.querySelector('#sort-up').classList.remove('active');
-        this.classList.toggle('active');
+        console.log("Sort down!");
+        sortDirection = "down";
         sort();
-        render();
-    })
+    });
+
 }
 
 function addVoteEvents() {
-    document.querySelectorAll('.upvote-button').forEach(el => {
-        el.addEventListener('click', (e) => {
-            upVote(e.target.value)
+    const upvoteButtons = document.querySelectorAll('.upvote-button');
+    upvoteButtons.forEach(function (button) {
+        button.addEventListener('click', function (event) {
+            console.log(event.target);
+            upVote(event.target);
         })
-    })
+    });
 
-    document.querySelectorAll('.downvote-button').forEach(el => {
-        el.addEventListener('click', (e) => {
-            downVote(e.target.value)
+    const downvoteButtons = document.querySelectorAll('.downvote-button');
+    downvoteButtons.forEach(function (button) {
+        button.addEventListener('click', function (event) {
+            console.log(event.target);
+            downVote(event.target);
         })
     })
 }
 
 function sort() {
+    console.log("This is the sorting function");
+
     if (sortDirection == 'down') {
         adjectives.sort(function (a, b) {
             if (a.score > b.score) {
-                return 1
-            } else {
                 return -1
+            } else {
+                return 1
             }
-        })
+        });
     } else {
         adjectives.sort(function (a, b) {
             if (a.score > b.score) {
-                return -1
-            } else {
                 return 1
+            } else {
+                return -1
             }
-        })
+        });
     }
+
+    render();
 }
 
 function render() {
+    console.log("render!");
+
+    //create htmlstring
     let htmlString = '';
 
-    adjectives.forEach(function (item) {
-        let rate = 'bad';
-        if (item.score >= 6) {
-            rate = 'good';
+    adjectives.forEach(function (adjective) {
+        let scoreClass = 'bad';
+        if (adjective.score >= 6) {
+            scoreClass = 'good';
         }
+
         htmlString += `
-            <div class="word-item">
-            <span class="word-score ${rate}">${item.score}</span>
-            <span>${item.word}</span>
+        <div class="word-item">
+            <span class="word-score ${scoreClass}">${adjective.score}</span>
+            <span>${adjective.word}</span>
             <div class="vote-buttons">
-                <button value="${item.word}" class="upvote-button">👍</button>
-                <button value="${item.word}" class="downvote-button">👎</button>
+                <button value="${adjective.word}" class="upvote-button">👍</button>
+                <button value="${adjective.word}" class="downvote-button">👎</button>
             </div>
         </div>
-        `
+        `;
     })
 
-    document.getElementById('container').innerHTML = htmlString;
+    //add htmlString to HTML
+    document.querySelector('#container').innerHTML = htmlString;
 
     addVoteEvents();
 }
 
 function upVote(target) {
-    console.log(target);
-    updateScore(target, 0.1);
-    sort();
+    console.log("Upvote", target.value);
+    updateScore(target.value, 0.1);
     render();
 }
 
 
-function downVote(value) {
-    console.log(target);
-    updateScore(target, -0.1);
-    sort();
-
+function downVote(target) {
+    console.log("Downvote", target.value);
+    updateScore(target.value, -0.1);
     render();
 }
 

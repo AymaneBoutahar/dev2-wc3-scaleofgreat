@@ -8,9 +8,20 @@ let sortDirection = "up";
 function init() {
     console.log("Let's start");
 
-    adjectives = JSON.parse(getAdjectives());
+
+    fetch('https://dev2-prima.onrender.com/adjectives').then(function(response){
+        return response.json();
+        }).then(function(result){
+            console.log(result);
+
+            adjectives = result;
+            render(); 
+            console.log(adjectives);
+            addSortEvents();
+        });
+        
+
     console.log(adjectives);
-    render();
     addSortEvents();
 }
 
@@ -107,8 +118,13 @@ function render() {
 
 function upVote(target) {
     console.log("Upvote", target.value);
-    updateScore(target.value, 0.1);
-    render();
+
+    fetch(`https://dev2-prima.onrender.com/upvote/upvote/${target.value}`).then(function(response){
+        console.log('Upvote complete');
+        init();
+    });
+    // updateScore(target.value, 0.1);
+    // render();
 }
 
 
